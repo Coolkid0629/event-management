@@ -42,12 +42,12 @@ To get started with the Event Management App, follow these steps:
 
 ## Contributing
 
-We welcome contributions! Please read our Contributing Guidelines for more details.
+We welcome contributions!
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more information.
+No license for this project yet!
 
 ## Contact
 
-If you have any questions or feedback, feel free to reach out to us at support@eventmanagementapp.com.
+If you have any questions or feedback, feel free to reach out to me at kaustubh0629@gmail.com.

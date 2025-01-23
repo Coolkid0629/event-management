@@ -1,0 +1,133 @@
+The utils/ folder in your project is typically used to store utility functions and helper modules that can be used across different parts of your application. These functions are usually small, reusable, and don't necessarily belong to a specific feature or component but help make your code cleaner and more maintainable.
+
+
+-----------------------------------
+validate.js : This file contains functions to validate inputs for your events, user registration, and login forms, for example. It can include logic for checking the format of email addresses, passwords, etc.
+
+// utils/validate.js
+
+const isEmailValid = (email) => {
+  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return regex.test(email);
+};
+
+const isPasswordStrong = (password) => {
+  return password.length >= 8;
+};
+
+module.exports = { isEmailValid, isPasswordStrong };
+
+    usage :
+        const { isEmailValid, isPasswordStrong } = require('./utils/validate');
+
+        const email = "user@example.com";
+        if (!isEmailValid(email)) {
+        return res.status(400).json({ message: "Invalid email format" });
+        }
+
+
+
+-----------------------------------
+format.js : This file contains utility functions to format data, such as converting a string to uppercase, formatting numbers, or making the event title more readable.
+
+// utils/format.js
+
+const capitalizeFirstLetter = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+const formatCurrency = (amount) => {
+  return `$${parseFloat(amount).toFixed(2)}`;
+};
+
+module.exports = { capitalizeFirstLetter, formatCurrency };
+
+    usage :
+        const { capitalizeFirstLetter, formatCurrency } = require('./utils/format');
+        console.log(capitalizeFirstLetter("event")); // "Event"
+        console.log(formatCurrency(1500)); // "$1500.00"
+
+
+-----------------------------------
+date.js : This file can contain functions to format dates, calculate the time difference, or check whether a date is in the past, for example.
+
+// utils/date.js
+
+const moment = require('moment');
+
+const formatDate = (date) => {
+  return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+};
+
+const isDateInPast = (date) => {
+  return moment(date).isBefore(moment());
+};
+
+module.exports = { formatDate, isDateInPast };
+
+    usage :
+        const { formatDate, isDateInPast } = require('./utils/date');
+        const eventDate = "2025-06-15T10:00:00";
+
+        console.log(formatDate(eventDate)); // "June 15th 2025, 10:00:00 am"
+        console.log(isDateInPast(eventDate)); // false (if it's in the future)
+
+
+-----------------------------------
+slugify.js : This file is used to generate slugs for event URLs, such as converting an event title like "Summer Music Festival" into "summer-music-festival" for a clean and SEO-friendly URL.
+
+
+// utils/slugify.js
+
+const slugify = (text) => {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '') // Remove non-alphanumeric characters
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-'); // Replace multiple hyphens with a single one
+};
+
+module.exports = slugify;
+
+    usage :
+        const slugify = require('./utils/slugify');
+        const eventTitle = "Summer Music Festival";
+        console.log(slugify(eventTitle)); // "summer-music-festival"
+
+
+-----------------------------------
+sendEmail.js : This file contains functions that abstract the logic for sending emails. For example, you could use Nodemailer to send registration or event-related emails.
+
+// utils/sendEmail.js
+
+const nodemailer = require('nodemailer');
+
+const sendEmail = async (to, subject, text) => {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to,
+    subject,
+    text,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Email sent successfully.");
+  } catch (error) {
+    console.error("Error sending email: ", error);
+  }
+};
+
+module.exports = sendEmail;
+
+    usage :
+        const sendEmail = require('./utils/sendEmail');
+        sendEmail('user@example.com', 'Event Created', 'Your event has been successfully created!');

@@ -1,0 +1,89 @@
+The texts/ folder can contain JSON or JavaScript files for different categories of text or even translations for different languages.
+
+
+-----------------------------------
+en.json : This file stores all the static text displayed in your app for a single language (English in this case).
+
+{
+  "auth": {
+    "loginSuccess": "You have successfully logged in.",
+    "invalidCredentials": "Invalid username or password."
+  },
+  "events": {
+    "createSuccess": "Your event has been created successfully.",
+    "updateSuccess": "Event updated successfully.",
+    "deleteConfirm": "Are you sure you want to delete this event?"
+  },
+  "general": {
+    "welcome": "Welcome to Event Manager!",
+    "loading": "Loading...",
+    "error": "Something went wrong. Please try again later."
+  }
+}
+
+    usage :
+        const texts = require('./texts/en.json');
+        console.log(texts.general.welcome); // "Welcome to Event Manager!"
+
+
+
+-----------------------------------
+validationMessages.js : This file contains validation messages for user input, such as forms.
+
+const validationMessages = {
+  required: (field) => `${field} is required.`,
+  invalidEmail: "Please enter a valid email address.",
+  passwordTooShort: "Password must be at least 8 characters long.",
+  eventNameMaxLength: "Event name cannot exceed 50 characters.",
+};
+
+module.exports = validationMessages;
+
+    usage :
+        const validationMessages = require('./texts/validationMessages');
+        console.log(validationMessages.required("Email")); // "Email is required."
+
+
+-----------------------------------
+labels.js : This file contains all the labels for UI components, buttons, and titles.
+
+const labels = {
+  buttons: {
+    create: "Create",
+    update: "Update",
+    delete: "Delete",
+    login: "Login",
+    logout: "Logout",
+  },
+  headers: {
+    dashboard: "Dashboard",
+    eventDetails: "Event Details",
+    createEvent: "Create New Event",
+  },
+};
+
+module.exports = labels;
+
+    usage :
+        const labels = require('./texts/labels');
+        console.log(labels.buttons.create); // "Create"
+
+
+-----------------------------------
+errorMessages.js : This file stores error messages for your backend API or frontend app.
+
+const errorMessages = {
+  unauthorized: "You are not authorized to perform this action.",
+  eventNotFound: "Event not found.",
+  serverError: "Internal server error. Please try again later.",
+  validationError: "One or more fields failed validation.",
+};
+
+module.exports = errorMessages;
+
+    usage :
+        const errorMessages = require('./texts/errorMessages');
+        res.status(404).json({ message: errorMessages.eventNotFound });
+
+
+-----------------------------------

@@ -3,3 +3,7 @@
 
 # Ignore the config directory
 config/
+
+node_modules/
+
+package-lock.json
